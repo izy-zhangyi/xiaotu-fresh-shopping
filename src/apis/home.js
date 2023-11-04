@@ -9,3 +9,6 @@ export const findNewAPI = () => https.get('/home/new')
 
 // 获取人气推荐
 export const getHotAPI = () => https.get('/home/hot')
+
+// 获取产品列表数据
+export const getProductListAPI = () => https.get('/home/goods')

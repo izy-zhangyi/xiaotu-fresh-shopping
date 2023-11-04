@@ -1,23 +1,21 @@
 <script setup>
-import HomePannel from '@/views/home/components/HomePannel.vue'
+import HomePanel from '@/views/home/components/HomePanel.vue'
 import { useHomeStore } from '@/stores/homeStore.js'
 const homeStore = useHomeStore()
 </script>
 
 <template>
-  <HomePannel title="新鲜好物" subTitle="新鲜出炉 品质靠谱">
-    <template #main>
-      <ul class="goods-list">
-        <li v-for="item in homeStore.newList" :key="item.id">
-          <RouterLink :to="`/detail/${item.id}`">
-            <img v-img-lazy="item.picture" alt="" srcset="" />
-            <p class="name">{{ item.name }}</p>
-            <p class="price">{{ item.price }}</p>
-          </RouterLink>
-        </li>
-      </ul>
-    </template>
-  </HomePannel>
+  <HomePanel title="新鲜好物" subTitle="新鲜出炉 品质靠谱">
+    <ul class="goods-list">
+      <li v-for="item in homeStore.newList" :key="item.id">
+        <RouterLink :to="`/detail/${item.id}`">
+          <img v-img-lazy="item.picture" alt="" srcset="" />
+          <p class="name">{{ item.name }}</p>
+          <p class="price">{{ item.price }}</p>
+        </RouterLink>
+      </li>
+    </ul>
+  </HomePanel>
 </template>
 
 <style scoped lang="scss">

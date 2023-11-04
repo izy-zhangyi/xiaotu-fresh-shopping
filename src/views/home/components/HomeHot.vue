@@ -1,59 +1,160 @@
 <script setup>
-import HomePannel from '@/views/home/components/HomePannel.vue'
+import HomePanel from '@/views/home/components/HomePanel.vue'
 import { useHomeStore } from '@/stores/homeStore.js'
 const homeStore = useHomeStore()
 </script>
 
 <template>
-  <HomePannel title="人气推荐" subTitle="人气爆款 不容错过">
-    <template #main>
-      <ul class="goods-list">
-        <li v-for="item in homeStore.hotList" :key="item.id">
-          <RouterLink to="/">
-            <img v-img-lazy="item.picture" alt="" srcset="" />
-            <p class="title">{{ item.title }}</p>
-            <p class="alt">{{ item.alt }}</p>
-          </RouterLink>
-        </li>
-      </ul>
-    </template>
-  </HomePannel>
+  <div class="home-product">
+    <HomePanel
+      :title="cate.name"
+      v-for="cate in homeStore.productList"
+      :key="cate.id"
+    >
+      <div class="box">
+        <RouterLink class="cover" to="/">
+          <img :src="cate.picture" />
+          <strong class="label">
+            <span>{{ cate.name }}馆</span>
+            <span>{{ cate.saleInfo }}</span>
+          </strong>
+        </RouterLink>
+        <ul class="goods-list">
+          <li v-for="good in cate.goods" :key="good.id">
+            <RouterLink to="/" class="goods-item">
+              <img :src="good.picture" alt="" />
+              <p class="name ellipsis">{{ good.name }}</p>
+              <p class="desc ellipsis">{{ good.desc }}</p>
+              <p class="price">&yen;{{ good.price }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+    </HomePanel>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.goods-list {
-  display: flex;
-  justify-content: space-between;
-  height: 406px;
+.home-product {
+  background: #fff;
+  margin-top: 20px;
+  .sub {
+    margin-bottom: 2px;
 
-  li {
-    width: 306px;
-    height: 406px;
+    a {
+      padding: 2px 12px;
+      font-size: 16px;
+      border-radius: 4px;
 
-    background: #f0f9f4;
-    transition: all 0.5s;
+      &:hover {
+        background: $xtxColor;
+        color: #fff;
+      }
 
-    &:hover {
-      transform: translate3d(0, -3px, 0);
-      box-shadow: 0 3px 8px rgb(0 0 0 / 20%);
+      &:last-child {
+        margin-right: 80px;
+      }
+    }
+  }
+
+  .box {
+    display: flex;
+
+    .cover {
+      width: 240px;
+      height: 610px;
+      margin-right: 10px;
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+
+      .label {
+        width: 188px;
+        height: 66px;
+        display: flex;
+        font-size: 18px;
+        color: #fff;
+        line-height: 66px;
+        font-weight: normal;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translate3d(0, -50%, 0);
+
+        span {
+          text-align: center;
+
+          &:first-child {
+            width: 76px;
+            background: rgba(0, 0, 0, 0.9);
+          }
+
+          &:last-child {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.7);
+          }
+        }
+      }
     }
 
-    img {
-      width: 306px;
-      height: 306px;
+    .goods-list {
+      width: 990px;
+      display: flex;
+      flex-wrap: wrap;
+
+      li {
+        width: 240px;
+        height: 300px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+
+        &:nth-last-child(-n + 4) {
+          margin-bottom: 0;
+        }
+
+        &:nth-child(4n) {
+          margin-right: 0;
+        }
+      }
     }
 
-    p {
-      font-size: 22px;
-      padding-top: 12px;
+    .goods-item {
+      display: block;
+      width: 220px;
+      padding: 20px 30px;
       text-align: center;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
+      transition: all 0.5s;
 
-    .price {
-      color: $priceColor;
+      &:hover {
+        transform: translate3d(0, -3px, 0);
+        box-shadow: 0 3px 8px rgb(0 0 0 / 20%);
+      }
+
+      img {
+        width: 160px;
+        height: 160px;
+      }
+
+      p {
+        padding-top: 10px;
+      }
+
+      .name {
+        font-size: 16px;
+      }
+
+      .desc {
+        color: #999;
+        height: 29px;
+      }
+
+      .price {
+        color: $priceColor;
+        font-size: 20px;
+      }
     }
   }
 }

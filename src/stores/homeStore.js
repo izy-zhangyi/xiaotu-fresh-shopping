@@ -1,6 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getBannerAPI, findNewAPI, getHotAPI } from '@/apis/home.js'
+import {
+  getBannerAPI,
+  findNewAPI,
+  getHotAPI,
+  getProductListAPI
+} from '@/apis/home.js'
 
 export const useHomeStore = defineStore('home', () => {
   // 封装轮播图数据
@@ -21,12 +26,20 @@ export const useHomeStore = defineStore('home', () => {
     const res = await getHotAPI()
     hotList.value = res.result
   }
+  // 封装商品列表数据
+  const productList = ref([])
+  const getProductList = async () => {
+    const res = await getProductListAPI()
+    productList.value = res.result
+  }
   return {
     bannerList,
     getBannerList,
     newList,
     getNewList,
     hotList,
-    getHostList
+    getHostList,
+    productList,
+    getProductList
   }
 })
