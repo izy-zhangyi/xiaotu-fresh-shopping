@@ -1,9 +1,12 @@
 <script setup>
 import { useCategoryStore } from '@/stores/categoryStore.js'
 import { useRoute } from 'vue-router'
+import { useHomeStore } from '@/stores/homeStore.js'
+const homeStore = useHomeStore()
 const router = useRoute()
 const categoryStore = useCategoryStore()
 categoryStore.getTopCateGoryList(router.params.id)
+homeStore.getBannerList({ distributionSite: '2' })
 </script>
 
 <template>
@@ -18,11 +21,28 @@ categoryStore.getTopCateGoryList(router.params.id)
           }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+      <!-- 轮播图区域 -->
+      <div class="home-banner">
+        <el-carousel :interval="4000" type="card" height="500px">
+          <el-carousel-item v-for="item in homeStore.bannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="" srcset="" />
+          </el-carousel-item>
+        </el-carousel>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.home-banner {
+  width: 1240px;
+  height: 500px;
+  margin: 0 auto;
+}
+img {
+  width: 100%;
+  height: 500px;
+}
 .top-category {
   h3 {
     font-size: 28px;

@@ -10,9 +10,10 @@ import {
 export const useHomeStore = defineStore('home', () => {
   // 封装轮播图数据
   const bannerList = ref([])
-  const getBannerList = async () => {
-    const res = await getBannerAPI()
+  const getBannerList = async (params) => {
+    const res = await getBannerAPI(params)
     bannerList.value = res.result
+    console.log(params)
   }
   // 封装新鲜好物数据
   const newList = ref([])
