@@ -2,6 +2,7 @@
 import { useCategoryStore } from '@/stores/categoryStore.js'
 import { useRoute } from 'vue-router'
 import { useHomeStore } from '@/stores/homeStore.js'
+import GoodsItem from '@/views/home/components/GoodsItem.vue'
 const homeStore = useHomeStore()
 const router = useRoute()
 const categoryStore = useCategoryStore()
@@ -28,6 +29,29 @@ homeStore.getBannerList({ distributionSite: '2' })
             <img :src="item.imgUrl" alt="" srcset="" />
           </el-carousel-item>
         </el-carousel>
+      </div>
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in categoryStore.topCateGoryList.children" :key="i.id">
+            <RouterLink to="/">
+              <img :src="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="ref-goods"
+        v-for="item in categoryStore.topCateGoryList.children"
+        :key="item.id"
+      >
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="good in item.goods" :item="good" :key="good.id" />
+        </div>
       </div>
     </div>
   </div>
