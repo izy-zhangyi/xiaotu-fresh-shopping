@@ -1,12 +1,19 @@
 <script setup>
 import { useCategoryStore } from '@/stores/categoryStore.js'
-import { useRoute } from 'vue-router'
+import { onBeforeRouteUpdate } from 'vue-router'
 import { useHomeStore } from '@/stores/homeStore.js'
 import GoodsItem from '@/views/home/components/GoodsItem.vue'
 const homeStore = useHomeStore()
-const router = useRoute()
+// const router = useRoute()
 const categoryStore = useCategoryStore()
-categoryStore.getTopCateGoryList(router.params.id)
+// 首次渲染，并不会监听路由变化，id为默认id
+categoryStore.getTopCateGoryList()
+// 引入 onBeforeRouteUpdate 解决路由缓存问题-防止路由组件重复使用
+// 监听路由变化 onBeforeRouteUpdate
+onBeforeRouteUpdate((to) => {
+  console.log('路由发生了变化', to.params.id)
+  categoryStore.getTopCateGoryList(to.params.id)
+})
 homeStore.getBannerList({ distributionSite: '2' })
 </script>
 

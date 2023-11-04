@@ -13,7 +13,6 @@ export const useHomeStore = defineStore('home', () => {
   const getBannerList = async (params) => {
     const res = await getBannerAPI(params)
     bannerList.value = res.result
-    console.log(params)
   }
   // 封装新鲜好物数据
   const newList = ref([])
