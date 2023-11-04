@@ -6,3 +6,6 @@ export const getBannerAPI = () => https.get('home/banner')
 
 // 获取新鲜好物
 export const findNewAPI = () => https.get('/home/new')
+
+// 获取人气推荐
+export const getHotAPI = () => https.get('/home/hot')

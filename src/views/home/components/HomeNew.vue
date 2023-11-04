@@ -9,7 +9,7 @@ const homeStore = useHomeStore()
     <template #main>
       <ul class="goods-list">
         <li v-for="item in homeStore.newList" :key="item.id">
-          <RouterLink to="/detail/`${item.id}">
+          <RouterLink :to="`/detail/${item.id}`">
             <img :src="item.picture" alt="" srcset="" />
             <p class="name">{{ item.name }}</p>
             <p class="price">{{ item.price }}</p>
