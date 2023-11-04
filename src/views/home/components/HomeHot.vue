@@ -10,7 +10,7 @@ const homeStore = useHomeStore()
       <ul class="goods-list">
         <li v-for="item in homeStore.hotList" :key="item.id">
           <RouterLink to="/">
-            <img :src="item.picture" alt="" srcset="" />
+            <img v-img-lazy="item.picture" alt="" srcset="" />
             <p class="title">{{ item.title }}</p>
             <p class="alt">{{ item.alt }}</p>
           </RouterLink>
