@@ -19,7 +19,11 @@ const router = createRouter({
     { path: '/login', component: Login },
     //二级分类路由
     { path: '/category/sub/:id', component: SubCategory }
-  ]
+  ],
+  // 路由滚动行为定制-- 当切换页面时，使滚动条在最顶部
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
 export default router
