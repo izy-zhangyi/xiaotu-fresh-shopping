@@ -1,7 +1,11 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { getCategoryListAPI } from '@/apis/layout.js'
-import { getTopCategoryAPI, getCategoryFilterAPI } from '@/apis/category.js'
+import {
+  getTopCategoryAPI,
+  getCategoryFilterAPI,
+  getSubCategoryAPI
+} from '@/apis/category.js'
 import { useRoute } from 'vue-router'
 export const useCategoryStore = defineStore('category', () => {
   // 导航列表的数据管理
@@ -28,12 +32,21 @@ export const useCategoryStore = defineStore('category', () => {
     const res = await getCategoryFilterAPI(id)
     subCategory.value = res.result
   }
+  // 封装二级分类列表数据
+  const subCategoryList = ref([])
+  const getsubCategoryList = async (data) => {
+    const res = await getSubCategoryAPI(data)
+    subCategoryList.value = res.result.items
+    console.log(data)
+  }
   return {
     categoryList,
     getCategoryList,
     topCateGoryList,
     getTopCateGoryList,
     subCategory,
-    getSubCategory
+    getSubCategory,
+    subCategoryList,
+    getsubCategoryList
   }
 })

@@ -1,9 +1,21 @@
 <script setup>
+import { ref } from 'vue'
 import { useCategoryStore } from '@/stores/categoryStore.js'
 import { useRoute } from 'vue-router'
+import GoodsItem from '@/views/home/components/GoodsItem.vue'
+
 const categoryStore = useCategoryStore()
 const route = useRoute()
 categoryStore.getSubCategory(route.params.id)
+// 封装请求二级分类列表数据
+const reqData = ref({
+  categoryId: route.params.id,
+  page: 1,
+  pageSize: 20,
+  sortField: 'publishTime'
+})
+
+categoryStore.getsubCategoryList(reqData.value)
 </script>
 
 <template>
@@ -31,6 +43,11 @@ categoryStore.getSubCategory(route.params.id)
       </el-tabs>
       <div class="body">
         <!-- 商品列表-->
+        <GoodsItem
+          v-for="item in categoryStore.subCategoryList"
+          :item="item"
+          :key="item.id"
+        />
       </div>
     </div>
   </div>

@@ -8,3 +8,7 @@ export const getTopCategoryAPI = (id) =>
 // 获取二级分类数据
 export const getCategoryFilterAPI = (id) =>
   https.get('/category/sub/filter', { params: { id } })
+
+// 获取二级分类数据列表 /category/goods/temporary
+export const getSubCategoryAPI = (data) =>
+  https.post('/category/goods/temporary', { params: { data } })
