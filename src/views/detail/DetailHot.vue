@@ -1,18 +1,30 @@
 <script setup>
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useDetailStore } from '@/stores/datilStore.js'
 const detailStore = useDetailStore()
 const router = useRoute()
 // 1代表24小时热销榜 2代表周热销榜 3代表总热销榜 可以使用type去适配title和数据列表
-const pops = defineProps({
+const props = defineProps({
   type: { type: Number, default: 1 }
 })
-detailStore.getHostList(router.params.id, pops.type)
+detailStore.getHostList(router.params.id, props.type)
+
+// 属性计算-title赋值
+const TITLEMAP = {
+  1: '24小时热榜',
+  2: '周热榜'
+  // 3: '月热榜',
+  // 4: '年热榜'
+}
+const title = computed(() => TITLEMAP[props.type])
+// 计算属性单一，不利于后期维护
+// const title = computed(() => (pops.type === 1 ? '24小时热榜' : '周热榜'))
 </script>
 
 <template>
   <div class="goods-hot">
-    <h3>周日榜单</h3>
+    <h3>{{ title }}</h3>
     <!-- 商品区块 -->
     <RouterLink
       to="/"
