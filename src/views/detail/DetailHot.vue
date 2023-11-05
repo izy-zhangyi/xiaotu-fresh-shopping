@@ -3,7 +3,11 @@ import { useRoute } from 'vue-router'
 import { useDetailStore } from '@/stores/datilStore.js'
 const detailStore = useDetailStore()
 const router = useRoute()
-detailStore.getHostList(router.params.id, 1)
+// 1代表24小时热销榜 2代表周热销榜 3代表总热销榜 可以使用type去适配title和数据列表
+const pops = defineProps({
+  type: { type: Number, default: 1 }
+})
+detailStore.getHostList(router.params.id, pops.type)
 </script>
 
 <template>
