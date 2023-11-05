@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-import { getDetailAPI } from '@/apis/detail.js'
+import { getDetailAPI, fetchHotGoodsAPI } from '@/apis/detail.js'
 
 export const useDetailStore = defineStore('detail', () => {
   // 封装 商品详情信息
@@ -11,8 +11,17 @@ export const useDetailStore = defineStore('detail', () => {
     goodsDetails.value = res.result
   }
 
+  // 封装热榜数据
+  const hotList = ref([])
+  const getHostList = async (id, type) => {
+    const res = await fetchHotGoodsAPI(id, type)
+    hotList.value = res.result
+    console.log(hotList.value)
+  }
   return {
     goodsDetails,
-    getGoodsDetails
+    getGoodsDetails,
+    hotList,
+    getHostList
   }
 })

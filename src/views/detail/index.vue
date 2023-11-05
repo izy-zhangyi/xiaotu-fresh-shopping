@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { useDetailStore } from '@/stores/datilStore.js'
+import DetailHot from './DetailHot.vue'
 const detailStore = useDetailStore()
 const router = useRoute()
 detailStore.getGoodsDetails(router.params.id)
@@ -124,7 +125,10 @@ detailStore.getGoodsDetails(router.params.id)
               </div>
             </div>
             <!-- 24热榜+专题推荐 -->
-            <div class="goods-aside"></div>
+            <div class="goods-aside">
+              <DetailHot />
+              <!-- <DetailHot /> -->
+            </div>
           </div>
         </div>
       </div>
