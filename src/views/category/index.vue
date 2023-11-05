@@ -3,8 +3,11 @@ import { useCategoryStore } from '@/stores/categoryStore.js'
 import { onBeforeRouteUpdate } from 'vue-router'
 import { useHomeStore } from '@/stores/homeStore.js'
 import GoodsItem from '@/views/home/components/GoodsItem.vue'
+// 轮播图数据
 const homeStore = useHomeStore()
-// const router = useRoute()
+homeStore.getBannerList({ distributionSite: '2' })
+
+// 分类数据
 const categoryStore = useCategoryStore()
 // 首次渲染，并不会监听路由变化，id为默认id
 categoryStore.getTopCateGoryList()
@@ -14,7 +17,6 @@ onBeforeRouteUpdate((to) => {
   console.log('路由发生了变化', to.params.id)
   categoryStore.getTopCateGoryList(to.params.id)
 })
-homeStore.getBannerList({ distributionSite: '2' })
 </script>
 
 <template>
@@ -41,7 +43,8 @@ homeStore.getBannerList({ distributionSite: '2' })
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in categoryStore.topCateGoryList.children" :key="i.id">
-            <RouterLink to="/">
+            <!-- 二级分类路由跳转 -->
+            <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
