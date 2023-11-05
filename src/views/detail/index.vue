@@ -2,6 +2,7 @@
 import { useRoute } from 'vue-router'
 import { useDetailStore } from '@/stores/datilStore.js'
 import DetailHot from './DetailHot.vue'
+import ImageView from '@/components/imageViews/ImageView.vue'
 const detailStore = useDetailStore()
 const router = useRoute()
 detailStore.getGoodsDetails(router.params.id)
@@ -36,7 +37,7 @@ detailStore.getGoodsDetails(router.params.id)
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-
+              <ImageView />
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
