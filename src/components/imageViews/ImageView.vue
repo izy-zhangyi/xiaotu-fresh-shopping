@@ -23,7 +23,12 @@ const { elementX, elementY, isOutside } = useMouseInElement(target)
 // 控制滑块跟随鼠标移动(监听elementX/Y变化，一旦变化重新设置left/top)
 const left = ref(0)
 const top = ref(0)
+const positionX = ref(0)
+const positionY = ref(0)
 watch([elementX, elementY, isOutside], () => {
+  // console.log('xy变化了')
+  // 鼠标没有在盒子中，不会去执行下面的逻辑，直接return掉
+  if (isOutside.value) return
   console.log('xy变化了')
   // 有效范围内控制滑块距离
   // 横向
@@ -42,18 +47,26 @@ watch([elementX, elementY, isOutside], () => {
   if (elementY.value > 300) top.value = 200
 
   if (elementY.value < 100) top.value = 0
+
+  // 图片放大效果 原图*2
+  positionX.value = -left.value * 2
+  positionY.value = -top.value * 2
 })
 </script>
 
 <template>
-  {{ elementX }},{{ elementY }},{{ isOutside }}
+  <!-- {{ elementX }},{{ elementY }},{{ isOutside }} -->
   <div class="goods-image">
     <!-- 左侧大图-->
     <div class="middle" ref="target">
       <!-- 根据鼠标事件切换对应图片 -->
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
+      <div
+        class="layer"
+        v-show="!isOutside"
+        :style="{ left: `${left}px`, top: `${top}px` }"
+      ></div>
     </div>
     <!-- 小图列表  添加鼠标移入事件mouseenter-->
     <ul class="small">
@@ -72,12 +85,12 @@ watch([elementX, elementY, isOutside], () => {
       class="large"
       :style="[
         {
-          backgroundImage: `url(${imageList[0]})`,
-          backgroundPositionX: `0px`,
-          backgroundPositionY: `0px`
+          backgroundImage: `url(${imageList[activeIndex]})`,
+          backgroundPositionX: `${positionX}px`,
+          backgroundPositionY: `${positionY}px`
         }
       ]"
-      v-show="false"
+      v-show="!isOutside"
     ></div>
   </div>
 </template>
