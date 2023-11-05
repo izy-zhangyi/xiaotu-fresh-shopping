@@ -37,7 +37,6 @@ export const useCategoryStore = defineStore('category', () => {
   const getsubCategoryList = async (data) => {
     const res = await getSubCategoryAPI(data)
     subCategoryList.value = res.result.items
-    console.log(data)
   }
   return {
     categoryList,
