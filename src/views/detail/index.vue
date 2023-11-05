@@ -2,10 +2,15 @@
 import { useRoute } from 'vue-router'
 import { useDetailStore } from '@/stores/datilStore.js'
 import DetailHot from './DetailHot.vue'
-import ImageView from '@/components/imageViews/ImageView.vue'
+
 const detailStore = useDetailStore()
 const router = useRoute()
 detailStore.getGoodsDetails(router.params.id)
+
+// sku 规格被操作时
+const skuChange = (val) => {
+  console.log(val)
+}
 </script>
 
 <template>
@@ -86,7 +91,7 @@ detailStore.getGoodsDetails(router.params.id)
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <Sku :goods="detailStore.goodsDetails" @change="skuChange" />
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
