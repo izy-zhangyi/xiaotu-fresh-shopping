@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useUserStore } from '@/stores/userStore.js'
 
+const userStore = useUserStore()
 // 表单数据
 const formData = ref({
   account: '',
@@ -40,7 +42,9 @@ const form = ref()
 const login = async () => {
   // 校验表单数据
   await form.value.validate()
-  console.log('login')
+  const { account, password } = formData.value
+  await userStore.getUserInfo({ account, password })
+  ElMessage.success('登录成功')
 }
 </script>
 
