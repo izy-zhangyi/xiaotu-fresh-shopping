@@ -79,8 +79,8 @@ const login = async () => {
               <el-form-item label="密码" prop="password">
                 <el-input v-model="formData.password" type="password" />
               </el-form-item>
-              <el-form-item label-width="22px">
-                <el-checkbox size="large" prop="agree">
+              <el-form-item prop="agree" label-width="22px">
+                <el-checkbox size="large" v-model="formData.agree">
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
