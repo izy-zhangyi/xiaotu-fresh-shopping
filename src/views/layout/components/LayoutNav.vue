@@ -1,12 +1,20 @@
-<script setup></script>
+<script setup>
+import { useUserStore } from '@/stores/userStore.js'
+const userStore = useUserStore()
+</script>
 
 <template>
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <template v-if="true">
+        <!-- 适配思路: 登录时显示第一块 非登录时显示第二块  
+          注：是否有token 会 undefine , 可以判断userInfo是否有数据-->
+        <template v-if="userStore.userInfo">
           <li>
-            <a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a>
+            <a href="javascript:;"
+              ><i class="iconfont icon-user"></i
+              >{{ userStore.userInfo.account }}</a
+            >
           </li>
           <li>
             <el-popconfirm
