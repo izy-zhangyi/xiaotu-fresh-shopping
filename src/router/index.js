@@ -30,5 +30,14 @@ const router = createRouter({
     return { top: 0 }
   }
 })
+// 路由全局前置守卫
+router.beforeEach((to) => {
+  if (!to.path.includes('/login')) {
+    // 判断token
+    const token = localStorage.getItem('token')
+    if (token) return
+    router.push('/login')
+  }
+})
 
 export default router
