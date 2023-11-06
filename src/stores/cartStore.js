@@ -53,6 +53,18 @@ export const useCartStore = defineStore(
       cartList.value.forEach((item) => (item.selectd = selectd))
     }
 
+    // 计算选中的商品数量
+    const selectedCount = computed(() =>
+      cartList.value
+        .filter((item) => item.selectd)
+        .reduce((count, item) => (count += item.count), 0)
+    )
+    // 计算选中的商品价格
+    const selectedPrice = computed(() =>
+      cartList.value
+        .filter((item) => item.selectd)
+        .reduce((price, item) => (price += item.count * item.price), 0)
+    )
     return {
       cartList,
       addCart,
@@ -61,7 +73,9 @@ export const useCartStore = defineStore(
       allPrice,
       singleCheck,
       allChange,
-      isAll
+      isAll,
+      selectedCount,
+      selectedPrice
     }
   },
   { persist: true }
