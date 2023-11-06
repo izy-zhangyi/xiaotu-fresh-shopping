@@ -39,7 +39,7 @@ const form = ref()
 // 登录
 const login = async () => {
   // 校验表单数据
-  await form.value.alidate()
+  await form.value.validate()
   console.log('login')
 }
 </script>
