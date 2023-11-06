@@ -1,4 +1,6 @@
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
 </script>
@@ -7,9 +9,8 @@ const userStore = useUserStore()
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <!-- 适配思路: 登录时显示第一块 非登录时显示第二块  
-          注：是否有token 会 undefine , 可以判断userInfo是否有数据-->
-        <template v-if="userStore.userInfo">
+        <!-- 适配思路: 登录时显示第一块 非登录时显示第二块-->
+        <template v-if="userStore.userInfo.token">
           <li>
             <a href="javascript:;"
               ><i class="iconfont icon-user"></i
@@ -31,7 +32,9 @@ const userStore = useUserStore()
           <li><a href="javascript:;">会员中心</a></li>
         </template>
         <template v-else>
-          <li><a href="javascript:;">请先登录</a></li>
+          <li>
+            <a href="javascript:;" @click="$router.push('/login')">请先登录</a>
+          </li>
           <li><a href="javascript:;">帮助中心</a></li>
           <li><a href="javascript:;">关于我们</a></li>
         </template>

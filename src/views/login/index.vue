@@ -1,12 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/userStore.js'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const userStore = useUserStore()
 // 表单数据
 const formData = ref({
-  account: '',
-  password: '',
+  account: 'heima282',
+  password: 'hm#qd@23!',
   agree: true
 })
 // 校验规则
@@ -43,8 +44,10 @@ const login = async () => {
   // 校验表单数据
   await form.value.validate()
   const { account, password } = formData.value
+  console.log('login-index')
   await userStore.getUserInfo({ account, password })
   ElMessage.success('登录成功')
+  router.replace({ path: '/' })
 }
 </script>
 
