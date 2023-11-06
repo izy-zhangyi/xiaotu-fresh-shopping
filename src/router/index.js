@@ -5,7 +5,7 @@ import Home from '@/views/home/index.vue'
 import Category from '@/views/category/index.vue'
 import SubCategory from '@/views/subCategory/index.vue'
 import Detail from '@/views/detail/index.vue'
-import { useUserStore } from '@/stores/userStore'
+// import { useUserStore } from '@/stores/userStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,16 +31,16 @@ const router = createRouter({
     return { top: 0 }
   }
 })
-// 路由全局前置守卫
+// // 路由全局前置守卫
 
-router.beforeEach((to) => {
-  if (!to.path.includes('/login')) {
-    // 判断token
-    const userStore = useUserStore()
-    const token = userStore.userInfo.token
-    if (token) return
-    router.push('/login')
-  }
-})
+// router.beforeEach((to) => {
+//   if (!to.path.includes('/login')) {
+//     // 判断token
+//     const userStore = useUserStore()
+//     const token = userStore.userInfo.token
+//     if (token) return
+//     router.push('/login')
+//   }
+// })
 
 export default router

@@ -1,15 +1,35 @@
 <script setup>
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useDetailStore } from '@/stores/datilStore.js'
-import DetailHot from './DetailHot.vue'
-
+import DetailHot from '@/views/detail/components/DetailHot.vue'
+import { useCartStore } from '@/stores/cartStore.js'
+const cartStore = useCartStore()
 const detailStore = useDetailStore()
 const router = useRoute()
 detailStore.getGoodsDetails(router.params.id)
 
 // sku 规格被操作时
+const skuObj = ref({})
 const skuChange = (val) => {
-  console.log(val)
+  skuObj.value = val
+}
+const num = ref(1)
+const handleChange = (num) => console.log(num)
+// 加入购物车
+const addCart = async () => {
+  if (skuObj.value.skuId) {
+    // 规则已选，出发 action
+    await cartStore.addCart({
+      id: detailStore.goodsDetails.id,
+      name: detailStore.goodsDetails.name,
+      picture: detailStore.goodsDetails.mainPictures[0],
+      count: num.value,
+      skuId: skuObj.value.skuId,
+      attrsText: skuObj.value.specsText,
+      selectd: true
+    })
+  }
 }
 </script>
 
@@ -70,7 +90,7 @@ const skuChange = (val) => {
             <div class="spec">
               <!-- 商品信息区 -->
               <p class="g-name">{{ detailStore.goodsDetails.name }}</p>
-              <p class="g-desc">{{ desc }}</p>
+              <p class="g-desc">{{ detailStore.goodsDetails.desc }}</p>
               <p class="g-price">
                 <span> {{ detailStore.goodsDetails.price }}</span>
                 <span>{{ detailStore.goodsDetails.oldPrice }}</span>
@@ -93,10 +113,12 @@ const skuChange = (val) => {
               <!-- sku组件 -->
               <Sku :goods="detailStore.goodsDetails" @change="skuChange" />
               <!-- 数据组件 -->
-
+              <el-input-number v-model="num" :min="1" @change="handleChange" />
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn"> 加入购物车 </el-button>
+                <el-button size="large" class="btn" @click="addCart">
+                  加入购物车
+                </el-button>
               </div>
             </div>
           </div>
