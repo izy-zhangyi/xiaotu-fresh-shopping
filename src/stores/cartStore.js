@@ -37,6 +37,8 @@ export const useCartStore = defineStore(
         }
       }
     }
+    // 退出登录 清空购物车列表
+    const clearCartList = () => (cartList.value = [])
 
     // 删除购物车-删除全部数据
     const delCart = async (skuId) => {
@@ -98,7 +100,8 @@ export const useCartStore = defineStore(
       isAll,
       selectedCount,
       selectedPrice,
-      newCartList
+      newCartList,
+      clearCartList
     }
   },
   { persist: true }
