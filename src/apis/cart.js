@@ -1,0 +1,7 @@
+import https from '@/utils/http.js'
+
+// 加入购物车
+export const insertCartAPI = (data) => https.post('/member/cart', data)
+
+// 获取最新的购物车列表数据
+export const findNewCartListAPI = () => https.get('/member/cart')
