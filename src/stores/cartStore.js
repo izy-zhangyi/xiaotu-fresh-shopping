@@ -40,12 +40,28 @@ export const useCartStore = defineStore(
         0
       )
     )
+    // 单选功能实现
+    const singleCheck = (skuId, selectd) => {
+      const item = cartList.value.find((item) => item.skuId === skuId)
+      item.selectd = selectd
+    }
+    // 是否是全选计算属性
+    const isAll = computed(() => cartList.value.every((item) => item.selectd))
+
+    // 全选/全部选
+    const allChange = (selectd) => {
+      cartList.value.forEach((item) => (item.selectd = selectd))
+    }
+
     return {
       cartList,
       addCart,
       delCart,
       allCount,
-      allPrice
+      allPrice,
+      singleCheck,
+      allChange,
+      isAll
     }
   },
   { persist: true }
