@@ -12,9 +12,14 @@ export const useUserStore = defineStore(
       userInfo.value = res.result
     }
 
+    // 退出登录 -- 清除用户信息
+    const clearUserInfo = () => {
+      userInfo.value = {}
+    }
     return {
       userInfo,
-      getUserInfo
+      getUserInfo,
+      clearUserInfo
     }
   },
   { persist: true }
