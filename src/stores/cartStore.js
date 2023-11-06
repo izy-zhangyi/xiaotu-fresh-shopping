@@ -20,6 +20,7 @@ export const useCartStore = defineStore(
         cartList.value.push(goods)
       }
     }
+    console.log(cartList.value)
     return {
       cartList,
       addCart

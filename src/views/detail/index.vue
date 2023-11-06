@@ -27,6 +27,7 @@ const addCart = async () => {
       count: num.value,
       skuId: skuObj.value.skuId,
       attrsText: skuObj.value.specsText,
+      price: detailStore.goodsDetails.price,
       selectd: true
     })
   }
