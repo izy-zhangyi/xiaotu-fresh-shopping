@@ -1,5 +1,6 @@
 <script setup>
 import { useCartStore } from '@/stores/cartStore.js'
+import { delCartAPI } from '@/apis/cart.js'
 const cartStore = useCartStore()
 // 单选
 const singleChange = (i, selected) => {
@@ -8,6 +9,14 @@ const singleChange = (i, selected) => {
 // 全选
 const allChange = (selected) => {
   cartStore.allChange(selected)
+}
+const delCart = async (i) => {
+  const index = cartStore.cartList.findIndex((item) => i.id === item.skuId)
+  if (index) {
+    await delCartAPI([i.id])
+    // 从购物车中移除指定元素
+    cartStore.cartList.splice(index, 1)
+  }
 }
 </script>
 
