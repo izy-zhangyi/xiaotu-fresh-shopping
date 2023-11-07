@@ -1,4 +1,7 @@
 <script setup>
+import { useOrderStore } from '@/stores/orderStore.js'
+import { ref } from 'vue'
+const orderState = useOrderStore()
 // tab列表
 const tabTypes = [
   { name: 'all', label: '全部订单' },
@@ -9,8 +12,14 @@ const tabTypes = [
   { name: 'complete', label: '已完成' },
   { name: 'cancel', label: '已取消' }
 ]
+const params = ref({
+  page: 1,
+  pageSize: 2,
+  orderState: 0
+})
+orderState.getOrderList(params.value)
 // 订单列表
-const orderList = []
+// const orderList = []
 </script>
 
 <template>
@@ -24,12 +33,16 @@ const orderList = []
       />
 
       <div class="main-container">
-        <div class="holder-container" v-if="orderList.length === 0">
+        <div class="holder-container" v-if="orderState.orderList.length === 0">
           <el-empty description="暂无订单数据" />
         </div>
         <div v-else>
           <!-- 订单列表 -->
-          <div class="order-item" v-for="order in orderList" :key="order.id">
+          <div
+            class="order-item"
+            v-for="order in orderState.orderList"
+            :key="order.id"
+          >
             <div class="head">
               <span>下单时间：{{ order.createTime }}</span>
               <span>订单编号：{{ order.id }}</span>
