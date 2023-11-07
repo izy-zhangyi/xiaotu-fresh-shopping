@@ -1,6 +1,10 @@
 <script setup>
 import { useOrderStore } from '@/stores/orderStore.js'
+import { useCartStore } from '@/stores/cartStore.js'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+const cartStore = useCartStore()
+const router = useRouter()
 const orderStore = useOrderStore()
 orderStore.getOrderInfo()
 // const checkInfo = ref({}) // 订单对象
@@ -15,6 +19,32 @@ const changeAddress = (item) => {
 const confirm = () => {
   orderStore.curAddress = activeAddress.value
   toggleFlag.value = false
+}
+// 创建订单
+const createOrder = async () => {
+  const res = await orderStore.createOrder({
+    deliveryTimeType: 1,
+    payType: 1,
+    payChannel: 1,
+    buyerMessage: '',
+    addressId: orderStore.curAddress.id,
+    goods: orderStore.checkInfo.goods.map((item) => {
+      return {
+        skuId: item.skuId,
+        count: item.count
+      }
+    })
+  })
+  const orderId = res.result.id
+  // 路由跳转到订单页
+  router.push({
+    path: '/pay',
+    query: {
+      id: orderId
+    }
+  })
+  // 更新购物车
+  cartStore.newCartList()
 }
 </script>
 
@@ -132,7 +162,9 @@ const confirm = () => {
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large">提交订单</el-button>
+          <el-button type="primary" size="large" @click="createOrder"
+            >提交订单</el-button
+          >
         </div>
       </div>
     </div>

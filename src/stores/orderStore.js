@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getOrdersInfoAPI } from '@/apis/orders.js'
+import { getOrdersInfoAPI, createOrderAPI } from '@/apis/orders.js'
 import { useCartStore } from '@/stores/cartStore.js'
 import router from '@/router'
 export const useOrderStore = defineStore(
@@ -29,10 +29,16 @@ export const useOrderStore = defineStore(
         (item) => item.isDefault === 0
       )
     }
+
+    // 创建订单
+    const createOrder = async (data) => {
+      return await createOrderAPI(data)
+    }
     return {
       checkInfo,
       curAddress,
-      getOrderInfo
+      getOrderInfo,
+      createOrder
     }
   },
   {}
