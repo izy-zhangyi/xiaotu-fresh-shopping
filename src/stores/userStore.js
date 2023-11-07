@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { loginAPI } from '@/apis/user'
+import { loginAPI, getLikeListAPI } from '@/apis/user'
 import { useCartStore } from '@/stores/cartStore.js'
 import { mergeCartAPI } from '@/apis/cart.js'
 
@@ -31,10 +31,19 @@ export const useUserStore = defineStore(
       userInfo.value = {}
       cartStore.clearCartList()
     }
+
+    // 封装你猜你喜欢数据
+    const likeList = ref([])
+    const getLikeList = async (limit) => {
+      const res = await getLikeListAPI(limit)
+      likeList.value = res.result
+    }
     return {
       userInfo,
       getUserInfo,
-      clearUserInfo
+      clearUserInfo,
+      likeList,
+      getLikeList
     }
   },
   { persist: true }

@@ -1,6 +1,8 @@
 <script setup>
-import { useCartStore } from '@/stores/userStore.js'
-const userStore = useCartStore()
+import { useUserStore } from '@/stores/userStore.js'
+import GoodsItem from '@/views/home/components/GoodsItem.vue'
+const userStore = useUserStore()
+userStore.getLikeList({ limit: 4 })
 </script>
 
 <template>
@@ -33,7 +35,11 @@ const userStore = useCartStore()
         <h4 data-v-bcb266e0="">猜你喜欢</h4>
       </div>
       <div class="goods-list">
-        <!-- <GoodsItem v-for="good in likeList" :key="good.id" :good="good" /> -->
+        <GoodsItem
+          v-for="good in userStore.likeList"
+          :key="good.id"
+          :item="good"
+        />
       </div>
     </div>
   </div>
