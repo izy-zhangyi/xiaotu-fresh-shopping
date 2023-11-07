@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getOrdersInfoAPI, createOrderAPI } from '@/apis/orders.js'
+import {
+  getOrdersInfoAPI,
+  createOrderAPI,
+  getOrderDetailAPI
+} from '@/apis/orders.js'
 import { useCartStore } from '@/stores/cartStore.js'
 import router from '@/router'
 export const useOrderStore = defineStore(
@@ -34,11 +38,20 @@ export const useOrderStore = defineStore(
     const createOrder = async (data) => {
       return await createOrderAPI(data)
     }
+
+    // 获取-订单详情(以及支付结果)
+    const payInfo = ref({})
+    const getOrderDetail = async (id) => {
+      const res = await getOrderDetailAPI(id)
+      payInfo.value = res.result
+    }
     return {
       checkInfo,
       curAddress,
       getOrderInfo,
-      createOrder
+      createOrder,
+      payInfo,
+      getOrderDetail
     }
   },
   {}

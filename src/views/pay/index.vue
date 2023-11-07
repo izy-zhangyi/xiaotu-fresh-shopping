@@ -1,5 +1,9 @@
 <script setup>
-const payInfo = {}
+import { useOrderStore } from '@/stores/orderStore'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const orderStore = useOrderStore()
+orderStore.getOrderDetail(route.query.id)
 </script>
 
 <template>
@@ -14,7 +18,7 @@ const payInfo = {}
         </div>
         <div class="amount">
           <span>应付总额：</span>
-          <span>¥{{ payInfo.payMoney?.toFixed(2) }}</span>
+          <span>¥{{ orderStore.payInfo.payMoney?.toFixed(2) }}</span>
         </div>
       </div>
       <!-- 付款方式 -->
