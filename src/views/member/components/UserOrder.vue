@@ -17,20 +17,25 @@ const total = ref(0)
 const params = ref({
   orderState: 0,
   page: 1,
-  pageSize: 5
+  pageSize: 2
 })
 const getOrderList = async () => {
   const res = await getUserOrder(params.value)
   orderList.value = res.result.items
   total.value = res.result.counts
-  console.log(params.value)
 }
 onMounted(() => getOrderList())
 
 // tab切换
 const tabChange = (type) => {
-  console.log(type)
+  // tab 切换 将页数重置为 1
   params.value.orderState = Number(type)
+  params.value.page = 1
+  getOrderList()
+}
+
+const onCurrentPage = (page) => {
+  params.value.page = page
   getOrderList()
 }
 </script>
@@ -135,7 +140,14 @@ const tabChange = (type) => {
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <el-pagination
+              :total="total"
+              :page-size="params.pageSize"
+              :current-page="params.page"
+              @current-change="onCurrentPage"
+              background
+              layout="prev, pager, next"
+            />
           </div>
         </div>
       </div>
