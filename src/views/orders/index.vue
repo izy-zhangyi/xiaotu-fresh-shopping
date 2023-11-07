@@ -6,6 +6,16 @@ orderStore.getOrderInfo()
 // const checkInfo = ref({}) // 订单对象
 // const curAddress = ref({}) // 地址对象
 const toggleFlag = ref(false)
+// 地址切换激活
+const activeAddress = ref({})
+const changeAddress = (item) => {
+  activeAddress.value = item
+}
+// 确定修改地址
+const confirm = () => {
+  orderStore.curAddress = activeAddress.value
+  toggleFlag.value = false
+}
 </script>
 
 <template>
@@ -132,6 +142,8 @@ const toggleFlag = ref(false)
     <div class="addressWrapper">
       <div
         class="text item"
+        @click="changeAddress(item)"
+        :class="{ active: activeAddress.id === item.id }"
         v-for="item in orderStore.checkInfo.userAddresses"
         :key="item.id"
       >
@@ -146,8 +158,8 @@ const toggleFlag = ref(false)
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button>取消</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button @click="toggleFlag = false">取消</el-button>
+        <el-button type="primary" @click="confirm">确定</el-button>
       </span>
     </template>
   </el-dialog>
