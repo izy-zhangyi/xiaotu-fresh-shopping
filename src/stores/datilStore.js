@@ -25,6 +25,6 @@ export const useDetailStore = defineStore(
       hotList,
       getHostList
     }
-  }
-  // { persist: true }
+  },
+  { persist: true }
 )

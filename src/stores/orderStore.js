@@ -54,5 +54,5 @@ export const useOrderStore = defineStore(
       getOrderDetail
     }
   },
-  {}
+  { persist: true }
 )

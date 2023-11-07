@@ -35,7 +35,7 @@ const title = computed(() => TITLEMAP[props.type])
       <img v-img-lazy="item.picture" alt="" />
       <p class="name ellipsis">{{ item.name }}</p>
       <p class="desc ellipsis">{{ item.desc }}</p>
-      <p class="price">&yen;200.00</p>
+      <p class="price">&yen;{{ item.price }}</p>
     </RouterLink>
   </div>
 </template>
