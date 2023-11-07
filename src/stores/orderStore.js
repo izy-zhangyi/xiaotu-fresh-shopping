@@ -7,6 +7,7 @@ import {
 } from '@/apis/orders.js'
 import { useCartStore } from '@/stores/cartStore.js'
 import router from '@/router'
+import { useCountDown } from '@/composables/useCountDown.js'
 export const useOrderStore = defineStore(
   'orders',
   () => {
@@ -41,9 +42,14 @@ export const useOrderStore = defineStore(
 
     // 获取-订单详情(以及支付结果)
     const payInfo = ref({})
+    const { formatTime, start } = useCountDown()
+    // 封装格式化好的倒计时时间
+    const formatDate = formatTime
     const getOrderDetail = async (id) => {
       const res = await getOrderDetailAPI(id)
       payInfo.value = res.result
+      // 初始化倒计时秒数
+      start(res.result.countdown)
     }
     return {
       checkInfo,
@@ -51,7 +57,8 @@ export const useOrderStore = defineStore(
       getOrderInfo,
       createOrder,
       payInfo,
-      getOrderDetail
+      getOrderDetail,
+      formatDate
     }
   },
   { persist: true }
