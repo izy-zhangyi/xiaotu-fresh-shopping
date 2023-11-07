@@ -65,28 +65,28 @@ export const useCartStore = defineStore(
       )
     )
     // 单选功能实现
-    const singleCheck = (skuId, selectd) => {
+    const singleCheck = (skuId, selected) => {
       const item = cartList.value.find((item) => item.skuId === skuId)
-      item.selectd = selectd
+      item.selected = selected
     }
     // 是否是全选计算属性
-    const isAll = computed(() => cartList.value.every((item) => item.selectd))
+    const isAll = computed(() => cartList.value.every((item) => item.selected))
 
     // 全选/全部选
-    const allChange = (selectd) => {
-      cartList.value.forEach((item) => (item.selectd = selectd))
+    const allChange = (selected) => {
+      cartList.value.forEach((item) => (item.selected = selected))
     }
 
     // 计算选中的商品数量
     const selectedCount = computed(() =>
       cartList.value
-        .filter((item) => item.selectd)
+        .filter((item) => item.selected)
         .reduce((count, item) => (count += item.count), 0)
     )
     // 计算选中的商品价格
     const selectedPrice = computed(() =>
       cartList.value
-        .filter((item) => item.selectd)
+        .filter((item) => item.selected)
         .reduce((price, item) => (price += item.count * item.price), 0)
     )
     return {

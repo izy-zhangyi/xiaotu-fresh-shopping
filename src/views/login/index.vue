@@ -6,7 +6,7 @@ const router = useRouter()
 const userStore = useUserStore()
 // 表单数据
 const formData = ref({
-  account: 'heima282',
+  account: 'heima301',
   password: 'hm#qd@23!',
   agree: true
 })

@@ -2,12 +2,12 @@
 import { useCartStore } from '@/stores/cartStore.js'
 const cartStore = useCartStore()
 // 单选
-const singleChange = (i, selectd) => {
-  cartStore.singleCheck(i.skuId, selectd)
+const singleChange = (i, selected) => {
+  cartStore.singleCheck(i.skuId, selected)
 }
 // 全选
-const allChange = (selectd) => {
-  cartStore.allChange(selectd)
+const allChange = (selected) => {
+  cartStore.allChange(selected)
 }
 </script>
 
@@ -36,8 +36,8 @@ const allChange = (selectd) => {
             <tr v-for="i in cartStore.cartList" :key="i.id">
               <td>
                 <el-checkbox
-                  :model-value="i.selectd"
-                  @change="(selectd) => singleChange(i, selectd)"
+                  :model-value="i.selected"
+                  @change="(selected) => singleChange(i, selected)"
                 />
               </td>
               <td>
@@ -96,7 +96,12 @@ const allChange = (selectd) => {
           <span class="red">¥ {{ cartStore.selectedPrice }}.00 </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary">下单结算</el-button>
+          <el-button
+            size="large"
+            type="primary"
+            @click="$router.push('/orders')"
+            >下单结算</el-button
+          >
         </div>
       </div>
     </div>
