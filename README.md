@@ -77,4 +77,4 @@ vee-validate （表单校验）
 https://zhoushugang.gitee.io/erabbit-client-pc-document/api.html
 ```
 
-![png](D:\vscode\xiaotu-fresh-shopping\public\png.png)
+![Alt text](image-1.png)

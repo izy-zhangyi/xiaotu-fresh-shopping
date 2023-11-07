@@ -9,6 +9,9 @@ import CartList from '@/views/cartlist/index.vue'
 import Orders from '@/views/orders/index.vue'
 import Pay from '@/views/pay/index.vue'
 import PayBack from '@/views/pay/components/PayBack.vue'
+import Member from '@/views/member/index.vue'
+import UserInfo from '@/views/member/components/UserInfo.vue'
+import UserOrder from '@/views/member/components/UserOrder.vue'
 // import { useUserStore } from '@/stores/userStore'
 
 const router = createRouter({
@@ -39,6 +42,14 @@ const router = createRouter({
         {
           path: 'paycallback',
           component: PayBack
+        },
+        {
+          path: 'member',
+          component: Member,
+          children: [
+            { path: '', component: UserInfo },
+            { path: 'order', component: UserOrder }
+          ]
         }
       ]
     },
