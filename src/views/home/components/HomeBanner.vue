@@ -1,12 +1,21 @@
 <script setup>
 import { useHomeStore } from '@/stores/homeStore.js'
+import router from '@/router'
 const homeStore = useHomeStore()
+const onImage = (val) => {
+  router.push(val)
+}
 </script>
 <template>
   <div class="home-banner">
     <el-carousel :interval="4000" type="card" height="500px">
       <el-carousel-item v-for="item in homeStore.bannerList" :key="item.id">
-        <img :src="item.imgUrl" alt="" srcset="" />
+        <img
+          :src="item.imgUrl"
+          alt=""
+          srcset=""
+          @click="onImage(item.hrefUrl)"
+        />
       </el-carousel-item>
     </el-carousel>
   </div>
