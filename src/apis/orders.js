@@ -10,4 +10,4 @@ export const createOrderAPI = (data) => https.post('/member/order', data)
 export const getOrderDetailAPI = (id) => https.get(`/member/order/${id}`)
 
 // 获取订单详情
-export const getUserOrderAPI = (params) => https.get('/member/order', params)
+export const getUserOrder = (params) => https.get('/member/order', { params })

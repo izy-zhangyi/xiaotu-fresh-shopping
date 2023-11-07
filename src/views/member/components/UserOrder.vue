@@ -1,7 +1,6 @@
 <script setup>
-import { useOrderStore } from '@/stores/orderStore.js'
-import { ref } from 'vue'
-const orderState = useOrderStore()
+import { getUserOrder } from '@/apis/orders.js'
+import { onMounted, ref } from 'vue'
 // tab列表
 const tabTypes = [
   { name: 'all', label: '全部订单' },
@@ -12,19 +11,33 @@ const tabTypes = [
   { name: 'complete', label: '已完成' },
   { name: 'cancel', label: '已取消' }
 ]
+// 获取订单列表
+const orderList = ref([])
+const total = ref(0)
 const params = ref({
+  orderState: 0,
   page: 1,
-  pageSize: 2,
-  orderState: 0
+  pageSize: 5
 })
-orderState.getOrderList(params.value)
-// 订单列表
-// const orderList = []
+const getOrderList = async () => {
+  const res = await getUserOrder(params.value)
+  orderList.value = res.result.items
+  total.value = res.result.counts
+  console.log(params.value)
+}
+onMounted(() => getOrderList())
+
+// tab切换
+const tabChange = (type) => {
+  console.log(type)
+  params.value.orderState = Number(type)
+  getOrderList()
+}
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs @tab-change="tabChange">
       <!-- tab切换 -->
       <el-tab-pane
         v-for="item in tabTypes"
@@ -33,23 +46,26 @@ orderState.getOrderList(params.value)
       />
 
       <div class="main-container">
-        <div class="holder-container" v-if="orderState.orderList.length === 0">
+        <div class="holder-container" v-if="orderList.length === 0">
           <el-empty description="暂无订单数据" />
         </div>
         <div v-else>
           <!-- 订单列表 -->
-          <div
-            class="order-item"
-            v-for="order in orderState.orderList"
-            :key="order.id"
-          >
+          <div class="order-item" v-for="order in orderList" :key="order.id">
             <div class="head">
               <span>下单时间：{{ order.createTime }}</span>
               <span>订单编号：{{ order.id }}</span>
               <!-- 未付款，倒计时时间还有 -->
               <span class="down-time" v-if="order.orderState === 1">
                 <i class="iconfont icon-down-time"></i>
-                <b>付款截止: {{ order.countdown }}</b>
+                <b
+                  >付款截止:
+                  {{
+                    order.countdown / 60 > 0
+                      ? Math.floor(order.countdown / 60) + '分钟'
+                      : order.countdown + '秒'
+                  }}</b
+                >
               </span>
             </div>
             <div class="body">
@@ -74,7 +90,7 @@ orderState.getOrderList(params.value)
               </div>
               <div class="column state">
                 <p>{{ order.orderState }}</p>
-                <p v-if="order.orderState === 3">
+                <p v-if="order.orderStore === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>
                 <p v-if="order.orderState === 4">

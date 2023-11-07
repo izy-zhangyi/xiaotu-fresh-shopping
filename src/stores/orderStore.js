@@ -3,8 +3,7 @@ import { ref } from 'vue'
 import {
   getOrdersInfoAPI,
   createOrderAPI,
-  getOrderDetailAPI,
-  getUserOrderAPI
+  getOrderDetailAPI
 } from '@/apis/orders.js'
 import { useCartStore } from '@/stores/cartStore.js'
 import router from '@/router'
@@ -54,12 +53,12 @@ export const useOrderStore = defineStore(
     }
 
     // 获取订单列表
-    const orderList = ref([])
-    const getOrderList = async (params) => {
-      const res = await getUserOrderAPI(params)
-      console.log(res)
-      orderList.value = res.result.items
-    }
+    // const orderList = ref([])
+    // const getOrderList = async (params) => {
+    //   const res = await getUserOrderAPI(params)
+    //   console.log(params)
+    //   orderList.value = res.result.items
+    // }
     return {
       checkInfo,
       curAddress,
@@ -67,9 +66,9 @@ export const useOrderStore = defineStore(
       createOrder,
       payInfo,
       getOrderDetail,
-      formatDate,
-      orderList,
-      getOrderList
+      formatDate
+      // orderList,
+      // getOrderList
     }
   },
   { persist: true }
