@@ -27,7 +27,7 @@ const title = computed(() => TITLEMAP[props.type])
     <h3>{{ title }}</h3>
     <!-- 商品区块 -->
     <RouterLink
-      to="/"
+      :to="`/detail/${item.id}`"
       class="goods-item"
       v-for="item in detailStore.hotList"
       :key="item.id"
