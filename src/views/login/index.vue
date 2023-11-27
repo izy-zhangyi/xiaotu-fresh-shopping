@@ -6,8 +6,8 @@ const router = useRouter()
 const userStore = useUserStore()
 // 表单数据
 const formData = ref({
-  account: 'heima301',
-  password: 'hm#qd@23!',
+  account: '',
+  password: '',
   agree: true
 })
 // 校验规则
